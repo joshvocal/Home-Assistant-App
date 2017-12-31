@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Home App</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- Josh Room Activity -->
+    <string name="title_activity_josh_room">Josh\'s Room</string>
+
+    <!-- Living Room Activity -->
+    <string name="title_activity_living_room">Living Room</string>
+</resources>

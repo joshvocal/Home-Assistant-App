@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "19099450165",
+    "firebase_url": "https://home-cb143.firebaseio.com",
+    "project_id": "home-cb143",
+    "storage_bucket": "home-cb143.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:19099450165:android:76e425efe37098cc",
+        "android_client_info": {
+          "package_name": "me.joshvocal.home"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "19099450165-qf55qu27prcifhsagjdq8o2ife5q28h4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "me.joshvocal.home",
+            "certificate_hash": "d6b0ec8dca9c7ceb18f3d2a1593a5513199ae2f8"
+          }
+        },
+        {
+          "client_id": "19099450165-j8ee843m9uo7pk0di0cceirbi1qjacin.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwbOv2_B7PSxtZD5Hj9djWiNOf0ilmuto"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "19099450165-j8ee843m9uo7pk0di0cceirbi1qjacin.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
