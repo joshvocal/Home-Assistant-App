@@ -5,7 +5,8 @@ package me.joshvocal.home;
  */
 
 public abstract class Config {
-    // copy this keys from your developer dashboard
+
+    // Copy this keys from your developer dashboard
     public static final String ACCESS_TOKEN = "cf2f250d7a1248e1b07696a1480ba908";
 
     public static final LanguageConfig[] languages = new LanguageConfig[]{

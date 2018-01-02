@@ -11,6 +11,9 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,6 +61,7 @@ public class TestActivity extends AppCompatActivity implements AIButton.AIButton
         // Use this method ot disconnect form speech recognition service
         // Not destroying the SpeechRecognition object in onPause would block other apps
         // from using SpeechRecognition service.
+        aiButton.pause();
     }
 
     @Override
@@ -75,7 +79,20 @@ public class TestActivity extends AppCompatActivity implements AIButton.AIButton
             public void run() {
                 Log.d(TAG, "onResult");
 
-                resultTextView.setText(gson.toJson(response));
+//                try {
+//
+//                    JSONObject jsonObject = new JSONObject(gson.toJson(response));
+//                    JSONObject result = jsonObject.getJSONObject("result");
+//                    JSONObject fulfillment = result.getJSONObject("fulfillment");
+//                    String speech = fulfillment.getString("speech");
+//
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+
+                resultTextView.setText(response.getResult().getFulfillment().getSpeech());
+
 
                 Log.i(TAG, "Received success response");
 

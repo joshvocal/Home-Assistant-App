@@ -13,7 +13,9 @@ public class TTS {
 
     public static void init(final Context context) {
         if (textToSpeech == null) {
+
             textToSpeech = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
+               
                 @Override
                 public void onInit(int i) {
 
