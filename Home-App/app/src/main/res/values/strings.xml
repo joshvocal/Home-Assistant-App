@@ -11,4 +11,6 @@
 
     <!-- Living Room Activity -->
     <string name="title_activity_living_room">Living Room</string>
+
+    <string name="facebook_app_id">171785570242072</string>
 </resources>

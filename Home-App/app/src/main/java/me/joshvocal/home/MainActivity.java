@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        TTS.init(getApplicationContext());
     }
 
     @Override
@@ -74,6 +76,8 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_living_room:
                 startActivity(new Intent(this, LivingRoomActivity.class));
                 break;
+            case R.id.nav_settings:
+                startActivity(new Intent(this, TestActivity.class));
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

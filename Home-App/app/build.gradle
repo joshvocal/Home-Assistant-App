@@ -32,6 +32,12 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-database:3.0.0'
     compile 'com.android.support:cardview-v7:26.1.0'
     compile 'com.android.support:recyclerview-v7:26.1.0'
+
+    compile 'com.facebook.android:facebook-messenger:4.28.0'
+
+    // api.ai SDK dependencies
+    compile 'ai.api:sdk:2.0.7@aar'
+    compile 'ai.api:libai:1.6.12'
 }
 
 // Add to the bottom of the file
