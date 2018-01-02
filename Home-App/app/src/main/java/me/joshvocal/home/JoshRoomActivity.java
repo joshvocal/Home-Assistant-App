@@ -101,17 +101,17 @@ public class JoshRoomActivity extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-
+                // Required Empty Method
             }
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+                // Required Empty Method
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                // Required Empty Method
             }
         });
     }

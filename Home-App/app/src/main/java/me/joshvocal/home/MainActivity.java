@@ -1,7 +1,9 @@
 package me.joshvocal.home;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -11,8 +13,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import me.joshvocal.home.fragments.ChatFragment;
+import me.joshvocal.home.fragments.VoiceFragment;
+
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        BottomNavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +36,12 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        BottomNavigationView bottomNavigationView = findViewById(R.id.navigation1);
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
+
         TTS.init(getApplicationContext());
+
+        switchToVoiceFragment();
     }
 
     @Override
@@ -79,11 +90,31 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_settings:
                 startActivity(new Intent(this, TestActivity.class));
             case R.id.nav_chat:
-                startActivity(new Intent(this, ChatActivity.class));
+                startActivity(new Intent(this, BottomActivity.class));
+            case R.id.nav_voice:
+                switchToVoiceFragment();
+                return true;
+            case R.id.navigation_dashboard:
+                switchToChatFragment();
+                return true;
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void switchToVoiceFragment() {
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.main_content, new VoiceFragment())
+                .commit();
+    }
+
+    private void switchToChatFragment() {
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.main_content, new ChatFragment())
+                .commit();
     }
 }

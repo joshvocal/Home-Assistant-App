@@ -35,7 +35,10 @@
             android:label="@string/title_activity_living_room"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".TestActivity" />
-        <activity android:name=".ChatActivity"></activity>
+        <activity android:name=".ChatActivity" />
+        <activity
+            android:name=".BottomActivity"
+            android:label="@string/title_activity_bottom"></activity>
     </application>
 
 </manifest>
