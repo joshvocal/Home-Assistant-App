@@ -21,7 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JoshRoomActivity extends AppCompatActivity implements View.OnClickListener {
+public class JoshRoomActivity extends AppCompatActivity {
 
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
@@ -46,9 +46,6 @@ public class JoshRoomActivity extends AppCompatActivity implements View.OnClickL
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(this);
 
         mRecyclerView = findViewById(R.id.recycler_view_josh_room);
         mRecyclerView.setHasFixedSize(true);
@@ -127,16 +124,6 @@ public class JoshRoomActivity extends AppCompatActivity implements View.OnClickL
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.fab:
-                break;
-            default:
-                break;
         }
     }
 }
