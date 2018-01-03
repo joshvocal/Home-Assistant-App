@@ -17,7 +17,7 @@
             android:value="@string/facebook_app_id" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -27,18 +27,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".JoshRoomActivity"
+            android:name=".activities.JoshRoomActivity"
             android:label="@string/title_activity_josh_room"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".LivingRoomActivity"
+            android:name=".activities.LivingRoomActivity"
             android:label="@string/title_activity_living_room"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".TestActivity" />
-        <activity android:name=".ChatActivity" />
-        <activity
-            android:name=".BottomActivity"
-            android:label="@string/title_activity_bottom"></activity>
+        <activity android:name=".activities.ChatActivity" />
     </application>
 
 </manifest>

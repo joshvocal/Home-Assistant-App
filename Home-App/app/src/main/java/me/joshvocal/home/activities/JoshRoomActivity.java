@@ -1,7 +1,6 @@
-package me.joshvocal.home;
+package me.joshvocal.home.activities;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -10,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -20,6 +18,11 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import me.joshvocal.home.adapters.JoshRoomItemAdapter;
+import me.joshvocal.home.R;
+import me.joshvocal.home.model.Room;
+import me.joshvocal.home.model.Switch;
 
 public class JoshRoomActivity extends AppCompatActivity {
 

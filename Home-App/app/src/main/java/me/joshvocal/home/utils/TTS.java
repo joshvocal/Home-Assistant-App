@@ -1,4 +1,4 @@
-package me.joshvocal.home;
+package me.joshvocal.home.utils;
 
 import android.content.Context;
 import android.speech.tts.TextToSpeech;
@@ -15,7 +15,7 @@ public class TTS {
         if (textToSpeech == null) {
 
             textToSpeech = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
-               
+
                 @Override
                 public void onInit(int i) {
 

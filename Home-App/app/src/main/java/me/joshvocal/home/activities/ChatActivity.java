@@ -1,18 +1,14 @@
-package me.joshvocal.home.fragments;
+package me.joshvocal.home.activities;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
@@ -29,47 +25,43 @@ import ai.api.model.AIError;
 import ai.api.model.AIRequest;
 import ai.api.model.AIResponse;
 import ai.api.model.Result;
-import me.joshvocal.home.ChatMessage;
-import me.joshvocal.home.ChatRecord;
-import me.joshvocal.home.Config;
+import me.joshvocal.home.model.ChatMessage;
+import me.joshvocal.home.adapters.ChatRecord;
+import me.joshvocal.home.utils.Config;
 import me.joshvocal.home.R;
 
-public class ChatFragment extends Fragment implements View.OnClickListener,
-        AIListener,
-        TextWatcher {
+public class ChatActivity extends AppCompatActivity
+        implements View.OnClickListener,
+        AIListener, TextWatcher {
 
-    public static final String TAG = ChatFragment.class.getName();
+    public static final String TAG = ChatActivity.class.getName();
 
     private RecyclerView recyclerView;
     private EditText editText;
     private RelativeLayout addBtn;
     private DatabaseReference databaseReference;
     private FirebaseRecyclerAdapter<ChatMessage, ChatRecord> adapter;
+    boolean flagFab = true;
 
     private AIService aiService;
     private AIRequest aiRequest;
     private AIDataService aiDataService;
 
-    public ChatFragment() {
-        // Required empty public constructor
-    }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_chat, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_chat);
 
-        addBtn = rootView.findViewById(R.id.addBtn);
-        addBtn.setOnClickListener(this);
+        recyclerView = findViewById(R.id.recyclerView);
 
-        editText = rootView.findViewById(R.id.editText);
+        editText = findViewById(R.id.editText);
         editText.addTextChangedListener(this);
 
-        recyclerView = rootView.findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
+        addBtn = findViewById(R.id.addBtn);
+        addBtn.setOnClickListener(this);
 
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setHasFixedSize(true);
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
@@ -80,8 +72,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener,
                 AIConfiguration.SupportedLanguages.English,
                 AIConfiguration.RecognitionEngine.System);
 
-
-        aiService = AIService.getService(getContext(), config);
+        aiService = AIService.getService(this, config);
         aiService.setListener(this);
 
         aiDataService = new AIDataService(config);
@@ -128,63 +119,6 @@ public class ChatFragment extends Fragment implements View.OnClickListener,
         });
 
         recyclerView.setAdapter(adapter);
-
-        return rootView;
-    }
-
-    @Override
-    public void onResult(AIResponse response) {
-
-        Result result = response.getResult();
-
-        String message = result.getResolvedQuery();
-        ChatMessage chatMessageUser = new ChatMessage(message, "user");
-        databaseReference.child("chat").push().setValue(chatMessageUser);
-
-        String reply = result.getFulfillment().getSpeech();
-        ChatMessage chatMessageBot = new ChatMessage(reply, "bot");
-        databaseReference.child("chat").push().setValue(chatMessageBot);
-    }
-
-    @Override
-    public void onError(AIError error) {
-        // Required Empty Method
-
-    }
-
-    @Override
-    public void onAudioLevel(float level) {
-        // Required Empty Method
-    }
-
-    @Override
-    public void onListeningStarted() {
-        // Required Empty Method
-    }
-
-    @Override
-    public void onListeningCanceled() {
-        // Required Empty Method
-    }
-
-    @Override
-    public void onListeningFinished() {
-        // Required Empty Method
-    }
-
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        // Required Empty Method
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-        // Required Empty Method
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-        // Required Empty Method
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -239,7 +173,56 @@ public class ChatFragment extends Fragment implements View.OnClickListener,
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onResult(AIResponse response) {
+
+        Result result = response.getResult();
+
+        String message = result.getResolvedQuery();
+        ChatMessage chatMessageUser = new ChatMessage(message, "user");
+        databaseReference.child("chat").push().setValue(chatMessageUser);
+
+        String reply = result.getFulfillment().getSpeech();
+        ChatMessage chatMessageBot = new ChatMessage(reply, "bot");
+        databaseReference.child("chat").push().setValue(chatMessageBot);
+    }
+
+    @Override
+    public void onError(AIError error) {
+        // Required Empty Method
+    }
+
+    @Override
+    public void onAudioLevel(float level) {
+        // Required Empty Method
+    }
+
+    @Override
+    public void onListeningStarted() {
+        // Required Empty Method
+    }
+
+    @Override
+    public void onListeningCanceled() {
+        // Required Empty Method
+    }
+
+    @Override
+    public void onListeningFinished() {
+        // Required Empty Method
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        // Required Empty Method
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        flagFab = false;
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        // Required Empty Method
     }
 }

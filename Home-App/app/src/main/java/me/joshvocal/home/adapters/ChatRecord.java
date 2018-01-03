@@ -1,8 +1,10 @@
-package me.joshvocal.home;
+package me.joshvocal.home.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+
+import me.joshvocal.home.R;
 
 /**
  * Created by josh on 1/2/18.

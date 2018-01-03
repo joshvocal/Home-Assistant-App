@@ -1,4 +1,4 @@
-package me.joshvocal.home;
+package me.joshvocal.home.utils;
 
 /**
  * Created by josh on 1/1/18.
