@@ -1,7 +1,6 @@
 package me.joshvocal.home.activities;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -19,43 +18,42 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.joshvocal.home.adapters.JoshRoomItemAdapter;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import me.joshvocal.home.adapters.RoomSwitchItemAdapter;
 import me.joshvocal.home.R;
 import me.joshvocal.home.model.Room;
 import me.joshvocal.home.model.Switch;
+import me.joshvocal.home.utils.Utils;
 
 public class JoshRoomActivity extends AppCompatActivity {
+
+    @BindView(R.id.recycler_view_josh_room)
+    RecyclerView mSwitchRecyclerView;
 
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
 
-    private JoshRoomItemAdapter mAdapter;
+    private RoomSwitchItemAdapter mAdapter;
     private Room joshRoom;
     private List<String> switchKeys;
-    private RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_josh_room);
+        ButterKnife.bind(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Set back button
-        ActionBar actionBar = this.getSupportActionBar();
+        Utils.setBackButton(this.getSupportActionBar());
 
-        // Set the action bar back button to look like an up button
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-
-        mRecyclerView = findViewById(R.id.recycler_view_josh_room);
-        mRecyclerView.setHasFixedSize(true);
+        mSwitchRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.addItemDecoration(
+        mSwitchRecyclerView.setLayoutManager(layoutManager);
+        mSwitchRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mSwitchRecyclerView.addItemDecoration(
                 new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
 
         joshRoom = new Room();
@@ -64,7 +62,7 @@ public class JoshRoomActivity extends AppCompatActivity {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference().child("JoshsRoom");
 
-        mAdapter = new JoshRoomItemAdapter(this, joshRoom.getSwitchList(), mDatabaseReference);
+        mAdapter = new RoomSwitchItemAdapter(this, joshRoom.getSwitchList(), mDatabaseReference);
 
         getFirebaseData();
     }
@@ -79,7 +77,7 @@ public class JoshRoomActivity extends AppCompatActivity {
                 String switchKey = dataSnapshot.getKey();
                 switchKeys.add(switchKey);
 
-                mRecyclerView.setAdapter(mAdapter);
+                mSwitchRecyclerView.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();
             }
 
@@ -89,7 +87,6 @@ public class JoshRoomActivity extends AppCompatActivity {
                 int index = switchKeys.indexOf(key);
                 Switch switchData = dataSnapshot.getValue(Switch.class);
 
-
                 for (Switch switchIndex : joshRoom.getSwitchList()) {
                     if (switchIndex.getName().equals(key)) {
                         switchIndex.setValues(switchData);
@@ -98,7 +95,7 @@ public class JoshRoomActivity extends AppCompatActivity {
 
                 joshRoom.getSwitchList().set(index, switchData);
 
-                mRecyclerView.setAdapter(mAdapter);
+                mSwitchRecyclerView.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();
             }
 

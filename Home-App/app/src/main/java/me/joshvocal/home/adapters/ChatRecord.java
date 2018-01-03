@@ -4,6 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import me.joshvocal.home.R;
 
 /**
@@ -12,14 +14,15 @@ import me.joshvocal.home.R;
 
 public class ChatRecord extends RecyclerView.ViewHolder {
 
-    private TextView leftText;
-    private TextView rightText;
+    @BindView(R.id.leftText)
+    TextView leftText;
+
+    @BindView(R.id.rightText)
+    TextView rightText;
 
     public ChatRecord(View itemView) {
         super(itemView);
-
-        leftText = itemView.findViewById(R.id.leftText);
-        rightText = itemView.findViewById(R.id.rightText);
+        ButterKnife.bind(this, itemView);
     }
 
     public TextView getLeftText() {

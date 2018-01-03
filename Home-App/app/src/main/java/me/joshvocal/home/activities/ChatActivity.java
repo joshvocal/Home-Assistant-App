@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -25,23 +26,30 @@ import ai.api.model.AIError;
 import ai.api.model.AIRequest;
 import ai.api.model.AIResponse;
 import ai.api.model.Result;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import me.joshvocal.home.model.ChatMessage;
 import me.joshvocal.home.adapters.ChatRecord;
-import me.joshvocal.home.utils.Config;
 import me.joshvocal.home.R;
+import me.joshvocal.home.utils.Utils;
 
 public class ChatActivity extends AppCompatActivity
         implements View.OnClickListener,
         AIListener, TextWatcher {
 
+    @BindView(R.id.recycler_view_chat)
+    RecyclerView chatRecyclerView;
+
+    @BindView(R.id.editText)
+    EditText chatEditText;
+
+    @BindView(R.id.sendMessageButton)
+    RelativeLayout sendMessageButton;
+
     public static final String TAG = ChatActivity.class.getName();
 
-    private RecyclerView recyclerView;
-    private EditText editText;
-    private RelativeLayout addBtn;
     private DatabaseReference databaseReference;
-    private FirebaseRecyclerAdapter<ChatMessage, ChatRecord> adapter;
-    boolean flagFab = true;
+    private FirebaseRecyclerAdapter<ChatMessage, ChatRecord> firebaseAdapter;
 
     private AIService aiService;
     private AIRequest aiRequest;
@@ -51,24 +59,25 @@ public class ChatActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        ButterKnife.bind(this);
 
-        recyclerView = findViewById(R.id.recyclerView);
+        setTitle(R.string.title_chat);
 
-        editText = findViewById(R.id.editText);
-        editText.addTextChangedListener(this);
+        Utils.setBackButton(this.getSupportActionBar());
 
-        addBtn = findViewById(R.id.addBtn);
-        addBtn.setOnClickListener(this);
+        chatEditText.addTextChangedListener(this);
 
-        recyclerView.setHasFixedSize(true);
+        sendMessageButton.setOnClickListener(this);
+
+        chatRecyclerView.setHasFixedSize(true);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        chatRecyclerView.setLayoutManager(linearLayoutManager);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.keepSynced(true);
 
-        final AIConfiguration config = new AIConfiguration(Config.ACCESS_TOKEN,
+        final AIConfiguration config = new AIConfiguration(getString(R.string.dialogflow_access_token),
                 AIConfiguration.SupportedLanguages.English,
                 AIConfiguration.RecognitionEngine.System);
 
@@ -79,7 +88,7 @@ public class ChatActivity extends AppCompatActivity
 
         aiRequest = new AIRequest();
 
-        adapter = new FirebaseRecyclerAdapter<ChatMessage, ChatRecord>(ChatMessage.class,
+        firebaseAdapter = new FirebaseRecyclerAdapter<ChatMessage, ChatRecord>(ChatMessage.class,
                 R.layout.msglist,
                 ChatRecord.class,
                 databaseReference.child("chat")) {
@@ -100,32 +109,32 @@ public class ChatActivity extends AppCompatActivity
             }
         };
 
-        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+        firebaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
                 super.onItemRangeInserted(positionStart, itemCount);
 
-                int msgCount = adapter.getItemCount();
+                int msgCount = firebaseAdapter.getItemCount();
                 int lastVisiblePosition = linearLayoutManager.findLastCompletelyVisibleItemPosition();
 
                 if (lastVisiblePosition == -1 ||
                         (positionStart >= (msgCount - 1) &&
                                 lastVisiblePosition == (positionStart - 1))) {
-                    recyclerView.scrollToPosition(positionStart);
+                    chatRecyclerView.scrollToPosition(positionStart);
 
                 }
 
             }
         });
 
-        recyclerView.setAdapter(adapter);
+        chatRecyclerView.setAdapter(firebaseAdapter);
     }
 
     @SuppressLint("StaticFieldLeak")
     @Override
     public void onClick(View v) {
 
-        String message = editText.getText().toString().trim();
+        String message = chatEditText.getText().toString().trim();
 
         if (!message.isEmpty()) {
 
@@ -169,7 +178,7 @@ public class ChatActivity extends AppCompatActivity
             aiService.startListening();
         }
 
-        editText.setText("");
+        chatEditText.setText("");
     }
 
     @Override
@@ -218,11 +227,22 @@ public class ChatActivity extends AppCompatActivity
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        flagFab = false;
+        // Required Empty Method
     }
 
     @Override
     public void afterTextChanged(Editable s) {
         // Required Empty Method
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

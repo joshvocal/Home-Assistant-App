@@ -13,6 +13,10 @@
                 android:id="@+id/nav_living_room"
                 android:icon="@drawable/ic_home_black_24dp"
                 android:title="Living Room" />
+            <item
+                android:id="@+id/nav_kitchen"
+                android:icon="@drawable/ic_home_black_24dp"
+                android:title="Kitchen" />
         </menu>
     </item>
 

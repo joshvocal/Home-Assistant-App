@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 
@@ -21,14 +22,14 @@ import me.joshvocal.home.model.Switch;
  * Created by josh on 12/29/17.
  */
 
-public class JoshRoomItemAdapter extends RecyclerView.Adapter<JoshRoomItemAdapter.SwitchHolder> {
+public class RoomSwitchItemAdapter extends RecyclerView.Adapter<RoomSwitchItemAdapter.SwitchHolder> {
 
     private List<Switch> mSwitchList;
     private Context mContext;
     private DatabaseReference mDatabaseReference;
 
-    public JoshRoomItemAdapter(Context context, List<Switch> switchList,
-                               DatabaseReference databaseReference) {
+    public RoomSwitchItemAdapter(Context context, List<Switch> switchList,
+                                 DatabaseReference databaseReference) {
         mContext = context;
         mSwitchList = switchList;
         mDatabaseReference = databaseReference;
@@ -77,13 +78,12 @@ public class JoshRoomItemAdapter extends RecyclerView.Adapter<JoshRoomItemAdapte
             if (isChecked) {
                 mSwitch.setChecked(true);
                 mSwitchList.get(getAdapterPosition()).setValue(true);
-                mDatabaseReference.child("BedroomLight").child("value").setValue(true);
-
+                mDatabaseReference.child(currentSwitch.getName()).child("value").setValue(true);
 
             } else {
                 mSwitch.setChecked(false);
                 mSwitchList.get(getAdapterPosition()).setValue(false);
-                mDatabaseReference.child("BedroomLight").child("value").setValue(false);
+                mDatabaseReference.child(currentSwitch.getName()).child("value").setValue(false);
             }
 
             android.os.Handler handler = new android.os.Handler();

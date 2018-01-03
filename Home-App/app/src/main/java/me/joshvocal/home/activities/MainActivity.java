@@ -19,7 +19,6 @@ import ai.api.android.AIConfiguration;
 import ai.api.model.AIError;
 import ai.api.model.AIResponse;
 import ai.api.ui.AIButton;
-import me.joshvocal.home.utils.Config;
 import me.joshvocal.home.R;
 import me.joshvocal.home.utils.TTS;
 
@@ -42,6 +41,8 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        setTitle(R.string.title_voice);
+
         floatingActionButton = findViewById(R.id.fab_chat);
         floatingActionButton.setOnClickListener(this);
 
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity
         resultTextView = findViewById(R.id.resultTextView);
         aiButton = findViewById(R.id.micButton);
 
-        final AIConfiguration config = new AIConfiguration(Config.ACCESS_TOKEN,
+        final AIConfiguration config = new AIConfiguration(getString(R.string.dialogflow_access_token),
                 AIConfiguration.SupportedLanguages.English,
                 AIConfiguration.RecognitionEngine.System);
 

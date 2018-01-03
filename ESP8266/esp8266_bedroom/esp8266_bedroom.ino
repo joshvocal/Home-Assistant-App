@@ -18,7 +18,7 @@ const int ON = 1;
 const int OFF = 0;
 const int PRINT_DELAY_MS = 500;
 const int LED_PIN = 12;
-const String PATH = "JoshsRoom/BedroomLight/value";
+const String PATH = "LivingRoom/Fireplace/value";
 
 void connectToWiFi() {
 
