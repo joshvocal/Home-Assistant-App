@@ -19,11 +19,11 @@ const int OFF = 0;
 const int PRINT_DELAY_MS = 500;
 const int LED_PIN = 12;
 
-const String PATH = "JoshsRoom/BedroomLight/value";
+const String PATH = "LivingRoom/Fireplace/value";
 
 void connectToWiFi() {
 
-  // Connect to WiFit
+  // Connect to WiFi
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   Serial.println("Connecting to WiFi");
 

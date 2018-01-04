@@ -13,13 +13,14 @@ exports.receiveAssistantRequests = functions.https.onRequest((request, response)
 
         const device = app.getArgument('devices');
         const status = app.getArgument('status');
+        const room = app.getArgument('room');
+        const name = app.getArgument('name')
 
-        admin.database().ref(`/JoshsRoom/${device}/value`).set(status == 'true')
-            .then(snapshot => {
-                app.ask(`Ok, switching ${device} ${status}. Do you want to control anything else?`);
-                response.send(200);
-            });
-
+        admin.database().ref(`/${room}/${device}/value`).set(status == 'true')
+        .then(snapshot => {
+            app.ask(`Ok, switching ${device} ${status}. Do you want to control anything else?`);
+            response.send(200);
+        });
     }
     app.handleRequest(handlerRequest);
 });
