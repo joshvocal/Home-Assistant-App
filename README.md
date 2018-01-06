@@ -3,6 +3,12 @@
 A home assistant that allows you to control appliances connected to ESP8266
 microcontrollers through an Android app connected through Firebase and DialogFlow. Appliances can be individually controlled through the app in various ways such as speech and chat using natural language processing through DialogFlow.
 
+![](https://github.com/joshvocal/Home-Assistant-App/blob/master/demo/home1.png)
+
+![](https://github.com/joshvocal/Home-Assistant-App/blob/master/demo/home2.png)
+
+![](https://github.com/joshvocal/Home-Assistant-App/blob/master/demo/home-demo.gif)
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
