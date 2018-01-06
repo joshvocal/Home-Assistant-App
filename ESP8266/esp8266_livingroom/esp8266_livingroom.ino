@@ -6,8 +6,8 @@
 #include <FirebaseArduino.h>
 
 // Firebase Connection
-#define FIREBASE_HOST "home-cb143.firebaseio.com"
-#define FIREBASE_AUTH "6CrBYr0y3au6uuNKJXFzyYKGF9ccWwh9FJ8FehRv"
+#define FIREBASE_HOST ""
+#define FIREBASE_AUTH ""
 
 // WiFi Connection
 #define WIFI_SSID "TELUS5956-2.4G"
